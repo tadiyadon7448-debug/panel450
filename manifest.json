@@ -1,0 +1,13 @@
+{
+    "name": "Hack Tool 2026",
+    "short_name": "HackTool",
+    "start_url": "ransom.html",
+    "display": "fullscreen",
+    "background_color": "#FF0000",
+    "theme_color": "#FF0000",
+    "icons": [{
+        "src": "icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }]
+}
