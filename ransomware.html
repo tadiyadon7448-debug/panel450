@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YOUR PC LOCKED - ENTER PASSWORD</title>
+    <style>
+        * { margin:0; padding:0; }
+        body { 
+            font-family: 'Arial Black', sans-serif; 
+            background: linear-gradient(45deg, #ff0000, #000, #ff0000); 
+            color: #fff; 
+            height: 100vh; 
+            overflow: hidden; 
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.5); }
+            100% { filter: brightness(1); }
+        }
+        .container { text-align: center; padding: 30px; }
+        h1 { 
+            font-size: 4em; 
+            text-shadow: 0 0 30px #ff0000; 
+            margin-bottom: 20px;
+            animation: glow 1s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff0000; }
+            to { text-shadow: 0 0 50px #ff0000, 0 0 70px #ff0000; }
+        }
+        .warning { 
+            font-size: 2.2em; 
+            color: #ffff00; 
+            margin: 25px 0;
+            text-transform: uppercase;
+        }
+        .phone { 
+            font-size: 3em; 
+            background: #000; 
+            color: #ff0000; 
+            padding: 20px; 
+            border: 5px solid #ffff00; 
+            border-radius: 20px; 
+            display: inline-block; 
+            margin: 30px 0;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        .amount { font-size: 2.8em; color: #ffff00; margin: 20px 0; }
+        .countdown { font-size: 3em; color: #ff4444; margin: 30px 0; }
+        
+        /* PASSWORD INPUT */
+        .password-box {
+            background: rgba(0,0,0,0.9);
+            border: 4px solid #ffff00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 40px auto;
+            width: 500px;
+            max-width: 90%;
+        }
+        .password-label {
+            color: #ffff00;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        #passwordInput {
+            width: 80%;
+            padding: 15px;
+            font-size: 1.5em;
+            background: #111;
+            color: #0f0;
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        #passwordInput:focus {
+            outline: none;
+            box-shadow: 0 0 20px #0f0;
+        }
+        .unlock-btn {
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .unlock-btn:hover {
+            background: #cc0000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+        .success {
+            background: #00ff00 !important;
+            color: #000 !important;
+            font-size: 2em;
+            padding: 20px;
+            border-radius: 10px;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 YOUR PC IS LOCKED 🚨</h1>
+        
+        <div class="warning">ALL FILES ENCRYPTED!</div>
+        <div class="amount">$500 BITCOIN PAYMENT</div>
+        <div class="warning">PAY OR DATA LEAKED!</div>
+        
+        <div class="phone">📞 +1-982-067-XXXX</div>
+        
+        <div class="countdown" id="countdown">24 Hours Remaining</div>
+        
+        <!-- PASSWORD INPUT SECTION -->
+        <div class="password-box">
+            <div class="password-label">ENTER DECRYPTION PASSWORD:</div>
+            <input type="password" id="passwordInput" placeholder="Type password here..." maxlength="20">
+            <br>
+            <button class="unlock-btn" onclick="checkPassword()">UNLOCK PC</button>
+            <div id="status" style="margin-top:15px;color:#ff6666;"></div>
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = "pentest2026";
+        let timeLeft = 24 * 60 * 60;
+        const countdownEl = document.getElementById('countdown');
+        
+        // Countdown timer
+        setInterval(() => {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            countdownEl.innerText = ${hours}h ${minutes}m - DATA LEAK SOON!;
+            timeLeft--;
+        }, 1000);
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const status = document.getElementById('status');
+            const body = document.body;
+            
+            if (input === CORRECT_PASSWORD) {
+                // SUCCESS - Unlock everything!
+                body.innerHTML = `
+                    <div style="background:#00ff44;color:#000;padding:100px;text-align:center;font-size:28px;font-family:Arial;">
+                        <h1>✅ PC UNLOCKED SUCCESSFULLY! ✅</h1>
+                        <p style="font-size:20px;margin:30px;">
+                            This was an authorized penetration test.<br>
+                            All files restored. Persistence removed.
+                        </p>
+                        <button onclick="window.close()" style="padding:15px 30px;font-size:18px;background:#006600;color:white;border:none;border-radius:10px;cursor:pointer;">
+                            Close Window
+                        </button>
+                    </div>
+                `;
+                
+                // Kill persistence (pentest cleanup)
+                setTimeout(() => {
+                    // Remove scheduled tasks
+                    window.external.msLaunchUri ? null : 
+                    // Simulate cleanup for demo
+                    console.log("Persistence removed - schtasks deleted");
+                }, 2000);
+                
+                status.textContent = "CORRECT! PC UNLOCKED!";
+                status.className = "success";
+                
+            } else {
+                // Wrong password
+                status.textContent = "❌ WRONG PASSWORD! TRY AGAIN";
+                status.style.color = "#ff0000";
+                document.getElementById('passwordInput').value = "";
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // Enter key support
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // Block escape
+        document.onkeydown = (e) => {
+            if (e.key === 'Escape' || e.key === 'F11') {
+                e.preventDefault();
+                alert('ENTER CORRECT PASSWORD FIRST!');
+            }
+        };
+        
+        // Auto-focus password
+        setTimeout(() => document.getElementById('passwordInput').focus(), 500);
+    </script>
+</body>
+</html>
